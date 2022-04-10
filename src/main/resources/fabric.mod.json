@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "sand",
+	"version": "${version}",
+
+	"name": "Grains of Sand",
+	"description": "Adds a magical system that allows you to manipulate time.",
+	"authors": [
+		"BrianComics#8994"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+
+	"license": "CC0-1.0",
+	"icon": "assets/sand/icon.png",
+
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"briancomics.grains.of.sand.GrainsOfSandMain"
+		]
+	},
+	"mixins": [
+		"sand.mixins.json"
+	],
+
+	"depends": {
+		"fabricloader": ">=0.12.12",
+		"fabric": "*",
+		"minecraft": "1.18.x",
+		"java": ">=17"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

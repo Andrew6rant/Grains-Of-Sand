@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "briancomics.grains.of.sand.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"ServerWorldMixin",
+		"WorldChunkMixin"
+	],
+	"client": [
+		"ClientWorldMixin",
+		"WorldRendererMixin",
+		"ParticleManagerMixin",
+		"SpriteAtlasTextureMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
