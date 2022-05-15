@@ -1,7 +1,10 @@
 package briancomics.grains.of.sand.mixin;
 
-import briancomics.grains.of.sand.helper.TimeManager;
+import briancomics.grains.of.sand.cca.MyComponents;
+import briancomics.grains.of.sand.cca.TimeComponent;
 import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.server.world.ServerWorld;
@@ -17,49 +20,75 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerWorldMixin {
 	@Inject(method = "tickBlock", at = @At("HEAD"), cancellable = true)
 	private void doNotTickBlock (BlockPos pos, Block block, CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 
 	@Inject(method = "tickChunk", at = @At("HEAD"), cancellable = true)
 	private void tickChunk (WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 
 	@Inject(method = "tickEntity", at = @At("HEAD"), cancellable = true)
 	private void doNotTickEntity (Entity entity, CallbackInfo ci) {
-		if (!TimeManager.shouldTick && TimeManager.canBeFrozen(entity))
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		TimeComponent timeComponent = MyComponents.TIME_COMPONENT.get(world);
+		if (timeComponent.getTimeStopped() && timeComponent.canBeFrozen(entity))
 			ci.cancel();
 	}
 
 	@Inject(method = "tickFluid", at = @At("HEAD"), cancellable = true)
 	private void doNotTickFluid (BlockPos pos, @Nullable Fluid fluid, CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 
 	@Inject(method = "tickPassenger", at = @At("HEAD"), cancellable = true)
 	private void doNotTickPassenger (Entity vehicle, Entity passenger, CallbackInfo ci) {
-		if (!TimeManager.shouldTick && TimeManager.canBeFrozen(passenger))
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		TimeComponent timeComponent = MyComponents.TIME_COMPONENT.get(world);
+		if (timeComponent.getTimeStopped() && timeComponent.canBeFrozen(passenger))
 			ci.cancel();
 	}
 
 	@Inject(method = "tickSpawners", at = @At("HEAD"), cancellable = true)
 	private void doNotTickSpawners (boolean spawnMonsters, boolean spawnAnimals, CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 
 	@Inject(method = "tickTime", at = @At("HEAD"), cancellable = true)
 	private void doNotTickDayNight (CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 
 	@Inject(method = "tickWeather", at = @At("HEAD"), cancellable = true)
 	private void doNotTickWeather (CallbackInfo ci) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			ci.cancel();
 	}
 }

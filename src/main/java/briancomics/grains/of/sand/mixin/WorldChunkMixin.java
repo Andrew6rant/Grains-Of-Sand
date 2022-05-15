@@ -1,6 +1,8 @@
 package briancomics.grains.of.sand.mixin;
 
-import briancomics.grains.of.sand.helper.TimeManager;
+import briancomics.grains.of.sand.cca.MyComponents;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class WorldChunkMixin {
 	@Inject(method = "canTickBlockEntity", at = @At("HEAD"), cancellable = true)
 	private void doNotTickBlockEntities (BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-		if (!TimeManager.shouldTick)
+		ClientWorld world = MinecraftClient.getInstance().world;
+		if (world == null)
+			return;
+		if (MyComponents.TIME_COMPONENT.get(world).getTimeStopped())
 			cir.setReturnValue(false);
 	}
 }

@@ -20,6 +20,9 @@
 	"entrypoints": {
 		"main": [
 			"briancomics.grains.of.sand.GrainsOfSandMain"
+		],
+		"cardinal-components": [
+			"briancomics.grains.of.sand.cca.MyComponents"
 		]
 	},
 	"mixins": [
@@ -34,5 +37,11 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+
+	"custom": {
+		"cardinal-components": [
+			"sand:time_component"
+		]
 	}
 }
