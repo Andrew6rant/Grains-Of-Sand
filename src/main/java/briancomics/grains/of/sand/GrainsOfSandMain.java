@@ -9,7 +9,7 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 public class GrainsOfSandMain implements ModInitializer {
-	public static final TimeClockItem TIME_CLOCK_ITEM = new TimeClockItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1).fireproof().rarity(Rarity.RARE));
+	public static final TimeClockItem TIME_CLOCK_ITEM = new TimeClockItem(new FabricItemSettings().group(ItemGroup.MISC).fireproof().rarity(Rarity.RARE).maxDamage(1500));
 
 	@Override
 	public void onInitialize () {
